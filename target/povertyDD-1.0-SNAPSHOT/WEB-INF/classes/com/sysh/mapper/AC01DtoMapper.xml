@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC01DtoMapper">
+  <resultMap id="BaseResultMap" type="com.sysh.entity.AC01Part">
+
+    <result column="AAC001"  property="aac001" />
+    <result column="AAR040"   property="aar040" />
+    <result column="AAR012"  property="aar012" />
+    <result column="aad001"  property="aad001" />
+    <result column="AAC006"  property="aac006" />
+    <result column="AAR010"  property="aar010" />
+    <result column="AAC007"  property="aac007" />
+    <result column="AAC008"  property="aac008" />
+    <result column="AAC029"  property="aac029" />
+    <result column="AAC031"  property="aac031" />
+    <result column="AAR001"  property="aar001" />
+  </resultMap>
+
+  <resultMap id="BaseMap" type="com.sysh.dto.PovertyLoginAfterDto">
+
+    <result column="aac029" property="povertyName" />
+    <result column="aac001" property="povertyNumber" />
+  </resultMap>
+
+
+  <select id="findPovertyUserName" parameterType="java.lang.Long" resultMap="BaseMap">
+    select  aac029,aac001，aar040  from  ac01
+        where  aac001=#{num} and aar040=(select max(aar040) from ac01) and aar100=1
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select aac001,aar040,aad001,aar012,aac006,aar010,aar007,aac007,aac008,aac029,aac031,aar001 from (
+      select * from ac01 where AAR100=1 AND  aac001=#{povertyNumber} order by aar040 desc) where ROWNUM=1
+  </select>
+
+  <select id="findAdress" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT t1.AAR009 FROM AC40 left join AA11 t1 on ac40.aar008=t1.AAR001  WHERE ac40.AAC001=#{aac001}
+  </select>
+
+  <select id="selectPovertyName" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select * from ac01 where aad001=#{Number} and aar100=1 and aar040=(select max(aar040) from ac01)
+  </select>
+  
+
+
+
+</mapper>

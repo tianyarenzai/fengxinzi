@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC01BasicMapper">
+  <resultMap id="ResultMap" type="com.sysh.entity.AC01Basic">
+
+    <result column="aac029"  property="aac029" />
+    <result column="aac031"  property="aac031" />
+    <result column="aar012"   property="aar012" />
+    <result column="aac001"   property="aac001" />
+    <result column="aad001"   property="aad001" />
+    <result column="aar040"   property="aar040" />
+    <result column="aaq002"   property="aaq002" />
+    <result column="aac004"   property="aac004" />
+    <result column="aac005"   property="aac005" />
+    <result column="aac006"   property="aac006" />
+    <result column="aar010"   property="aar010" />
+    <result column="aac007"   property="aac007" />
+    <result column="aac008"   property="aac008" />
+    <result column="aac011"   property="aac011" />
+    <result column="aac012"   property="aac012" />
+    <result column="aac013"   property="aac013" />
+    <result column="aac014"   property="aac014" />
+    <result column="aac015"   property="aac015" />
+    <result column="aac017"   property="aac017" />
+    <result column="aac019"   property="aac019" />
+    <result column="aar007"   property="aar007" />
+    <result column="aad041"   property="aad041" />
+  </resultMap>
+  <select id="findPovertyBasic" parameterType="java.lang.Long" resultMap="ResultMap">
+    select * from (
+      select aac029,aac031,aar012,aac001,aad001,aar040,aaq002,aac004,aac005,aac006,aar010,aac007,aac008,aac011,aac012,aac013,aac014,aac015,aac017,aac019,aar007,aad041
+      from AC01 where aac001=#{num}  order by aar040 desc ) where rownum=1
+  </select>
+
+  <select id="findPovertyNameByNum" parameterType="java.lang.Long" resultType="java.lang.String">
+    select aac029 from ac01 where aac001=#{povertyNum} and rownum=1
+  </select>
+  <select id="findFivePovertyOrBottomPoverty" parameterType="java.lang.String" resultType="java.lang.Long">
+    select * from (
+        select * from ac01 where aac006='04' or aac006='06' ) t where t.aac001=#{povertyNumber} and t.aar040=(select max(aar040) from ab01)
+  </select>
+  <select id="findDisable" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(1) from ab01 left join ab10 on ab01.aab001=ab10.aab001 where ab01.aar040=(select max(aar040) from ab01)
+       and ab01.aac001=#{povertyNumber}  and ab10.aar100=1 and ab10.aab015 in(1,4) and ab01.aab017='04'
+  </select>
+  <select id="findDisableIdNumber" parameterType="java.lang.String" resultType="java.lang.String">
+    select ab10.aab004 from ab01 left join ab10 on ab01.aab001=ab10.aab001 where ab01.aar040=(select max(aar040) from ab01)
+    and ab01.aac001=#{povertyNumber}  and ab10.aar100=1 and ab10.aab015 in('1','4') and ab01.aab017='04'
+  </select>
+
+  <select id="findLaborAbility" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(1) from ab01 left join ab10 on ab01.aab001=ab10.aab001 where ab01.aar040=(select max(aar040) from ab01)
+       and ab01.aac001=#{povertyNumber}  and ab10.aar100=1 and ab10.aab015 in('1','4') and ab01.aab010 in('01','02') and ab01.aab009='01'
+  </select>
+
+
+
+
+</mapper>

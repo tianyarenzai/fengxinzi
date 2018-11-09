@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.VillageBasicMapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.VillageBasicDto">
+
+    <result column="aar100"  property="aar100" />
+    <result column="aaf031"   property="aaf031" />
+    <result column="aar012"   property="aar012" />
+    <result column="aad004"   property="aad004" />
+    <result column="aad035"   property="aad035" />
+    <result column="aad036"   property="aad036" />
+    <result column="aar101"   property="aar101" />
+    <result column="aar102"   property="aar102" />
+    <result column="aad019"   property="aad019" />
+    <result column="aad027"   property="aad027" />
+    <result column="aad021"   property="aad021" />
+    <result column="aad022"   property="aad022" />
+    <result column="aad023"   property="aad023" />
+    <result column="aad024"   property="aad024" />
+    <result column="aad025"   property="aad025" />
+    <result column="aad005"   property="aad005" />
+    <result column="aad301"   property="aad301" />
+    <result column="aad302"   property="aad302" />
+    <result column="aad311"   property="aad311" />
+    <result column="aad313"   property="aad313" />
+    <result column="aad314"   property="aad314" />
+    <result column="aad006"   property="aad006" />
+    <result column="aad008"   property="aad008" />
+    <result column="aad009"   property="aad009" />
+    <result column="aad012"   property="aad012" />
+    <result column="aad013"   property="aad013" />
+    <result column="aad014"   property="aad014" />
+    <result column="aad015"   property="aad015" />
+    <result column="aad016"   property="aad016" />
+    <result column="aad328"   property="aad328" />
+    <result column="aad323"   property="aad323" />
+    <result column="aad331"   property="aad331" />
+    <result column="aad332"   property="aad332" />
+    <result column="aad358"   property="aad358" />
+    <result column="aad361"   property="aad361" />
+    <result column="aad371"   property="aad371" />
+    <result column="aad381"   property="aad381" />
+    <result column="aad383"   property="aad383" />
+    <result column="aad382"   property="aad382" />
+    <result column="aad384"   property="aad384" />
+    <result column="aad391"   property="aad391" />
+    <result column="aad392"   property="aad392" />
+    <result column="aad393"   property="aad393" />
+    <result column="aad394"   property="aad394" />
+    <result column="aad401"   property="aad401" />
+    <result column="aad412"   property="aad412" />
+    <result column="aad413"   property="aad413" />
+    <result column="aad414"   property="aad414" />
+    <result column="aac016"   property="aac016" />
+    <result column="aar011"   property="aar011" />
+
+
+  </resultMap>
+
+  <select id="findVIllageBasic" parameterType="java.lang.Long" resultMap="ResultMap">
+
+select
+ad01.aar011 aar011,ad01.aaf031 aaf031,ad01.aar012 aar012,ad01.aad004 aad004,ad01.aad035 aad035,ad01.aad036 aad036,
+ad01.aar101 aar101,ad01.aar102  aar102,
+ad10.aad019 aad019,ad10.aad027 aad027,ad10.aad021 aad021,ad10.aad022 aad022,ad10.aad023 aad023,ad10.aad024 aad024,
+ad10.aad025 aad025,ad10.aad005 aad005,ad10.aad301 aad301,
+ad10.aad302 aad302,ad10.aad311 aad311,ad10.aad313 aad313,ad10.aad314 aad314,ad32.aad006 aad006,ad32.aad008 aad008,
+ad32.aad009 aad009,ad32.aad012 aad012,ad32.aad013 aad013,
+ad32.aad014 aad014,ad32.aad015 aad015,ad32.aad016 aad016,ad32.aad018 aad018,ad10.aad328 aad328,ad10.aad323 aad323,
+ad32.aad331 aad331,ad32.aad332 aad332,ad10.aad358 aad358,
+ad32.aad361 aad361,ad10.aad371 aad371,ad10.aad381 aad381,ad10.aad383 aad383,ad10.aad382 aad382,ad10.aad384 aad384,
+ad10.aad391 aad391,ad10.aad392 aad392,ad10.aad393 aad393,
+ad10.aad394 aad394,ad10.aad401 aad401,ad10.aad412 aad412,ad10.aad413 aad413,ad10.aad414 aad414 ,ad01.aac016 aac016
+from ad01 left join ad10 on ad01.aad001=ad10.aad001 left join ad32 on ad32.aad001=ad10.aad001 and ad32.aad001=ad01.aad001 and ad32.aar040=ad10.aar040
+     where ad32.aar040=(select max(aar040)from ad32) and ad01.aad001=#{villageNumber}
+
+  </select>
+
+ <!-- <select id="findAad001" parameterType="java.lang.String" resultType="java.lang.String">
+    select aad001 from ad09 where aar100=1 and aar020 is not null and aar021 is not null
+    and aar021 &gt;(select to_char(sysdate,'yyyymmdd') from dual )
+    and aar020 &lt; (select to_char(sysdate,'yyyymmdd') from dual ) and aak110=#{helpNumber}
+  </select>-->
+  <!--<select id="findAad001" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT ad09.AAD001 FROM  AD09	left join AK11 on ad09.AAK110=ak11.AAK110	WHERE AAR666=1	AND ak11.AAK110=#{helpNumber} AND ak11.AAK032=1 or aak777=1
+  </select>-->
+  <select id="findAad001" parameterType="java.lang.String" resultType="java.lang.String">
+    select aad001 from (
+select ak11.aak110,ad09.aad001,ad09.aar666 from ad09 left join ak11 on ad09.AAK110=ak11.AAK110 where ak11.AAK032=1 or ak11.aak777=1 or aak031=1 or aak039=1 or aak666=1 )t where t.aar666=1 and t.aak110=#{helpNumber}
+  </select>
+
+</mapper>

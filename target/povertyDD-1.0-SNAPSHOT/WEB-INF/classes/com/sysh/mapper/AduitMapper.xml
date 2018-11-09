@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AduitMapper">
+
+
+  <select id="noAduitInfo" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+    select id,aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8) DataReviewTime from data_review
+       where first_secretary=0 or town_poverty_office=0 or county_poverty_office=0
+       and aak110=#{helpNumber}
+  </select>
+  <select id="AduitSucess" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+    select id ,aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8) DataReviewTime from data_review
+       where first_secretary=1 and town_poverty_office=1 and county_poverty_office=1
+       and aak110=#{helpNumber}
+  </select>
+  <select id="EightAduitSucess" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+    select id ,eight_id aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8) DataReviewTime from tbl_eight_review
+       where first_secretary=1 and town_poverty_office=1 and county_poverty_office=1
+       and aak110=#{helpNumber}
+  </select>
+  <select id="AduitFail" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+    select * from (
+ select id ,aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8)  DataReviewTime,aak110 from data_review
+       where  first_secretary=4 or town_poverty_office=4 or county_poverty_office=4 ) where aak110=#{helpNumber}
+  </select>
+  <select id="EightAduitFail" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+    select * from(
+select id ,eight_id aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8) DataReviewTime,aak110 from tbl_eight_review
+       where first_secretary=4 or town_poverty_office=4 or county_poverty_office=4) where aak110=#{helpNumber}
+  </select>
+
+  <select id="findAduitDetailInfo" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitDetailInfo">
+      select info_name infoName,update_before updateBefore, update_after updateAfter,data_review_id dataReviewId from info_review where data_review_id=#{id}
+  </select>
+  <update id="updateFirstSecretary" parameterType="java.util.Map"   >
+      update data_review set first_secretary =#{first} where id=#{dataId}
+  </update>
+  <update id="updateFirstSecretaryEight" parameterType="java.util.Map"   >
+      update tbl_eight_review set first_secretary =#{first} where id=#{dataId}
+  </update>
+
+
+    <select id="IsFirstSecretary" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT count(1) FROM (
+            SELECT * FROM AK11 WHERE aak032=1  )t WHERE t.AAK110=#{helpNumber}
+    </select>
+    <select id="IsBaocunSecretary" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT count(1) FROM (
+            SELECT * FROM AK11 WHERE aak777=1  )t WHERE t.AAK110=#{helpNumber}
+    </select>
+
+  <select id="FirstAduit" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+          select id id, aac001,modify_type ModifyType,data_review_time DataReviewTime from data_review  where aac001 in (select aac001 from ac01 where aar040=(select max(aar040) from ac01) and aad001=#{villageNumber}
+            INTERSECT
+            select aac001 from data_review) and data_review.first_secretary=0
+  </select>
+  <select id="FirstAduit2" parameterType="java.lang.Long" resultType="com.sysh.entity.aduit.AduitInfo">
+          select id id, aac001,modify_type ModifyType,SUBSTR(data_review_time, 0, 8) DataReviewTime from data_review  where aac001 in (select aac001 from ac40 where  aar008=#{villageNumber}
+            INTERSECT
+            select aac001 from data_review) and data_review.first_secretary=0
+  </select>
+
+    <!--<select id="findVillageNumber" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select aad001 from ad09 where aar100=1 and aar020 is not null and aar021 is not null
+        and aar021 &gt; (select to_char(sysdate,'yyyymmdd') from dual )
+        and aar020 &lt; (select to_char(sysdate,'yyyymmdd') from dual ) and aak110=(select t.aak110  from (
+        select aak110 from ak11 where  aak032=1 )t where t.aak110=#{helpNumber})
+    </select>-->
+    <select id="findVillageNumber" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT DISTINCT AAD001 FROM(
+      SELECT ad09.AAR666,ad09.aak110,ad09.AAD001 FROM AD09 left join AK11 on ad09.AAK110=ak11.AAK110 WHERE ak11.AAK032=1 or ak11.AAK777=1)t WHERE t.AAR666=1 AND t.AAK110=#{helpNumber}
+    </select>
+
+    <select id="findTableName" parameterType="java.lang.Long" resultType="java.lang.String">
+        select table_name tableName from data_review where id=#{id}
+    </select>
+
+    <!--一下不确定一定对，但是可以测试-->
+    <select id="findTable" resultType="java.lang.String" >
+        SELECT DISTINCT TABLE_NAME FROM tbl_eight_review WHERE FIRST_SECRETARY=0 and TOWN_POVERTY_OFFICE=0 and COUNTY_POVERTY_OFFICE=0
+    </select>
+    <!--得到审核信息-->
+    <select id="findAduitInfo" parameterType="java.util.Map" resultType="com.sysh.entity.aduit.AduitInfo">
+        SELECT
+        t1.id id,
+        SUBSTR(t1.DATA_REVIEW_TIME, 0, 8) DataReviewTime,
+        t1.MODIFY_TYPE ModifyType
+        <if test='table=="tbl_education" or table=="tbl_health" or table=="tbl_bottom_disabled" or table=="tbl_ecological_poverty"'>
+            , t2.NAME aac001
+        </if>
+        <if test='table=="tbl_employment"'>
+            ,  t2.EMPLOY_NAME aac001
+        </if>
+        <if test='table=="tbl_idst_projway"'>
+            , t2.HOLDER_NAME aac001
+        </if>
+        <if test='table=="tbl_immigrant_relocation" or table=="tbl_reconst_danger" or table=="tbl_bottom_guarantee_civil" '>
+            , t2.POVERTY_NAME aac001
+        </if>
+        FROM
+        ( SELECT * FROM tbl_eight_review WHERE FIRST_SECRETARY = 0 AND TOWN_POVERTY_OFFICE = 0 AND COUNTY_POVERTY_OFFICE = 0
+        <if test='table=="tbl_immigrant_relocation"' >
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_reconst_danger"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_education"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_employment"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_health"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_idst_projway"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_bottom_disabled"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_bottom_guarantee_civil"'>
+            AND TABLE_NAME = #{table}
+        </if>
+        <if test='table=="tbl_ecological_poverty"'>
+            AND TABLE_NAME = #{table}
+        </if>
+          ) t1
+        <if test='table=="tbl_immigrant_relocation"'>
+            left join ${upTable} t2
+        </if>
+        <if test='table=="tbl_reconst_danger"'>
+            left join ${upTable} t2
+        </if>
+        <if test='table=="tbl_education"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_employment"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_health"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_idst_projway"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_bottom_disabled"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_bottom_guarantee_civil"'>
+            left join  ${upTable} t2
+        </if>
+        <if test='table=="tbl_ecological_poverty"'>
+            left join  ${upTable} t2
+        </if>
+          ON t1.eight_id = t2.id
+        WHERE
+        <if test='table=="tbl_immigrant_relocation" or table=="tbl_reconst_danger" or table=="tbl_education" or table=="tbl_employment" or table=="tbl_health" or table=="tbl_idst_projway" or table=="tbl_bottom_disabled" or table=="tbl_bottom_guarantee_civil" or table=="tbl_ecological_poverty"'>
+            t2.ID_NUMBER
+        </if>
+        IN (
+        SELECT DISTINCT
+        ab10.AAB004
+        FROM
+        AC01 left join AC40 ON ac01.AAC001 = ac40.AAC001 left join AB10 ON ac01.AAC001 = ab10.AAC001 left join AB01 ON ab10.aab001 = ab01.AAB001
+        AND ab10.AAC001 = ab01.AAC001
+        AND ab01.aar040 = ac01.AAR040
+        AND ab01.AAB015 = ab10.AAB015
+        WHERE
+        ac01.AAR040 = #{year}
+        AND ac40.AAR008 = #{village}
+        AND ac01.AAC006 IN ( 01, 04, 06 )
+        AND ab01.AAB015 IN ( 1, 4 )
+        AND ac01.AAR100 = 1
+        <if test='table=="tbl_immigrant_relocation" or table=="tbl_reconst_danger"'>
+            AND ab01.AAB006 = 01
+        </if>
+        )
+        <if test='table=="tbl_bottom_guarantee_civil"'>
+            or t2.ID_NUMBER_POVERTY
+            IN (
+            SELECT DISTINCT
+            ab10.AAB004
+            FROM
+            AC01 left join AC40 ON ac01.AAC001 = ac40.AAC001 left join AB10 ON ac01.AAC001 = ab10.AAC001 left join AB01 ON ab10.aab001 = ab01.AAB001
+            AND ab10.AAC001 = ab01.AAC001
+            AND ab01.aar040 = ac01.AAR040
+            AND ab01.AAB015 = ab10.AAB015
+            WHERE
+            ac01.AAR040 = #{year}
+            AND ac40.AAR008 = #{village}
+            AND ac01.AAC006 IN ( 01, 04, 06 )
+            AND ab01.AAB015 IN ( 1, 4 )
+            AND ac01.AAR100 = 1)
+            /*易地搬迁，危房改造，生态补偿*/
+        </if>
+
+
+
+    </select>
+
+    <select id="findEvidenceAduit" parameterType="java.util.Map" resultType="com.sysh.vo.EvidenceFirstModel">
+        SELECT m.id id,ac01.AAC029 accountNo,m.IMAGE_TYPE imageType,m.UPLOAD_TIME uploadTime FROM TBL_HELP_IMAGE m left join AC01 on m.ACCOUNT_NO=ac01.AAC001 left join AC40 on ac01.AAC001=ac40.AAC001 WHERE ac01.AAR040=#{year} AND ac40.AAR008=(SELECT AAD001 FROM AD09 WHERE AAK110=#{helpNumber} AND AAR666=1) AND m.FIRST_ADUIT =0  AND m.TOWN_ADUIT =0 AND m.DISTRICT_ADUIT =0
+    </select>
+
+    <select id="evidenceDDDetail" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT image FROM TBL_EVIDENCE WHERE HELP_ID=#{id}
+    </select>
+
+    <update id="updateEvidenceFirst" parameterType="java.util.Map" >
+        UPDATE TBL_HELP_IMAGE set first_aduit=#{type} WHERE id=#{id}
+    </update>
+
+
+</mapper>

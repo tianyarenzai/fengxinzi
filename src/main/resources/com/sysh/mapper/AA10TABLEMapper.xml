@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AA10TABLEMapper">
+
+  <!--<resultMap id="BaseMap" type="com.sysh.entity.map.MapInfoModel">
+    <id column="id" property="mapID"/>
+    <result column="attr" property="mapAttr"/>
+    <result column="cnty" property="mapName"/>
+  </resultMap>-->
+
+
+  <select id="findMajorCause" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='主要致贫原因' and aaa102=#{majorNumber}
+  </select>
+
+  <select id="findIdentificationStandard" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='识别标准' and aaa102=#{s}
+  </select>
+  <select id="findPovertyTypeName" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='贫困户属性' and aaa102=#{s}
+  </select>
+  <select id="findSignsOfPovertyRelief" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='脱贫标志' and aaa102=#{s}
+  </select>
+
+  <select id="findOtherCause" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='其他致贫原因' and aaa102=#{s}
+  </select>
+  <select id="IsMajorObject" resultType="java.lang.String" parameterType="java.lang.String">
+    select DISTINCT aaa103 from AA10_TABLE where aaa101='是否重点对象' and aaa102=#{s}
+  </select>
+
+    <select id="TypeEntryRoad" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='入户路类型' and aaa102=#{s}
+    </select>
+
+    <select id="IsToilet" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='有无卫生厕所' and aaa102=#{s}
+    </select>
+    <select id="majorFuelType" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='主要燃料类型' and aaa102=#{s}
+    </select>
+    <select id="CrisisLevel" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='危房级别' and aaa102=#{s}
+    </select>
+    <select id="MoveMethod" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='搬迁方式' and aaa102=#{s}
+    </select>
+    <select id="FamilyRelation" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='与户主关系' and aaa102=#{s}
+    </select>
+    <select id="DocumentType" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='证件类型' and aaa102=#{s}
+    </select>
+    <select id="Nation" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='民族' and aaa102=#{s}
+    </select>
+    <select id="DegreeOfEducation" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='文化程度' and aaa102=#{s}
+    </select>
+    <select id="StudentStatus" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='在校生状况' and aaa102=#{s}
+    </select>
+    <select id="LaborSkills" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='劳动能力' and aaa102=#{s}
+    </select>
+    <select id="Healthy" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='健康状况' and aaa102=#{s}
+    </select>
+    <select id="PoliticalOutlook" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='政治面貌' and aaa102=#{s}
+    </select>
+    <select id="VillageType" resultType="java.lang.String" parameterType="java.lang.String">
+        select  DISTINCT aaa103 from AA10_TABLE where aaa101='村属性' and aaa102=#{s}
+    </select>
+    <select id="Development" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='按照发展方向' and aaa102=#{s}
+    </select>
+    <select id="Landform" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from AA10_TABLE where aaa101='按照地形地貌' and aaa102=#{s}
+    </select>
+    <select id="Position" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aaa103 from aa10_table where aaa101='行政职务级别' and aaa100='AAF031' and aaa102=#{s}
+    </select>
+    <select id="SelectVillageName" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aar009 from aa11 where aar001=#{s}
+    </select>
+    <select id="SelectTechnicalExpertise" resultType="java.lang.String" parameterType="java.lang.String">
+       select DISTINCT aaa103 from aa10_table where aaa101='技术特长' and aaa102=#{s}
+    </select>
+    <select id="findAffiliation" resultType="java.lang.String" parameterType="java.lang.String">
+       select DISTINCT aaa103 from aa10_table where aaa101='隶属关系' and aaa102=#{s}
+    </select>
+    <select id="findEducation" resultType="java.lang.String" parameterType="java.lang.String">
+       select DISTINCT aaa103 from aa10_table where aaa101='学历' and aaa102=#{s}
+    </select>
+
+    <select id="findFieldName" resultType="java.lang.String" parameterType="java.lang.String">
+        select  distinct aaa101 from aa10_table where aaa100=#{s}
+    </select>
+    <select id="findIdNumber" resultType="java.lang.String" parameterType="java.lang.String">
+        select DISTINCT aac031 from ac01 where aac001=#{s} and aar040=(select max(aar040) from ac01)
+    </select>
+
+    <select id="isConcrete" resultType="java.lang.String" parameterType="java.lang.String">
+          SELECT DISTINCT AAA103 FROM AA10_TABLE WHERE AAA101='到乡镇是否通沥青（水泥）路' AND AAA102=#{s}
+    </select>
+
+    <select id="isPassengerBus" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT DISTINCT AAA103 FROM AA10_TABLE WHERE AAA101='是否通客运班车' AND AAA102=#{s}
+    </select>
+
+
+
+
+
+
+
+
+</mapper>

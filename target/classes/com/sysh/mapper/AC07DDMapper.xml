@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC07DDMapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.PovertyIncomeDto">
+
+    <result column="aac073"  property="aac073" />
+    <result column="aac071"   property="aac071" />
+    <result column="aac072"   property="aac072" />
+    <result column="aac085"   property="aac085" />
+    <result column="aac076"   property="aac076" />
+    <result column="aac077"   property="aac077" />
+    <result column="aac086"   property="aac086" />
+    <result column="aac087"   property="aac087" />
+    <result column="aac078"   property="aac078" />
+    <result column="aac083"   property="aac083" />
+    <result column="aac081"   property="aac081" />
+    <result column="aac074"   property="aac074" />
+    <result column="aac079"   property="aac079" />
+    <result column="aac082"   property="aac082" />
+
+  </resultMap>
+
+  <select id="findIncome" parameterType="java.lang.Long" resultMap="ResultMap">
+   select aac073,aac071,aac072,aac085,aac076,aac077,aac086,aac087,aac078,aac083,aac081,aac074,aac079,aac082 from (
+      select * from ac07 where aac001=#{PoorHouseholds}  order by aar040 desc ) where rownum=1
+  </select>
+
+    <select id="findPersonAverage" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+       select aac082 from ac07 where aac001=#{num} and aar040=(select max(aar040)from ac07)
+    </select>
+  
+
+
+
+</mapper>

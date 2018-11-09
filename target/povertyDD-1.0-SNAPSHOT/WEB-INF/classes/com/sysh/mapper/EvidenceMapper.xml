@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.EvidenceMapper">
+
+
+  <insert id="insertEvidence" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id">
+      <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+          SELECT evidence_id.nextval id from dual
+      </selectKey>
+      insert into TBL_HELP_IMAGE(id,ACCOUNT_NO,IMAGE_TYPE,CADRE_NO,UPLOAD_TIME,VALID_MARK,FIRST_ADUIT,TOWN_ADUIT,DISTRICT_ADUIT) VALUES (#{id},#{povertyNumber},#{type},#{helpNumber},#{newTime},'0','0','0','0')
+  </insert>
+
+  <insert id="insertImagePath" parameterType="com.sysh.dto.EvidenceDto">
+      <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE">
+          SELECT evidence_path_id.NEXTVAL id from dual
+      </selectKey>
+      insert into TBL_EVIDENCE(ID,IMAGE,HELP_ID) VALUES(#{id},#{imagePath},#{helpId})
+  </insert>
+
+
+  
+
+
+
+</mapper>

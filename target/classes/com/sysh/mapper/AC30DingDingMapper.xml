@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC30DingDingMapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.PovertyProduceDto">
+
+    <result column="aac322"  property="aac322" />
+    <result column="aac320"  property="aac320" />
+    <result column="aac319"  property="aac319" />
+    <result column="aac318"  property="aac318" />
+    <result column="aac317"  property="aac317" />
+    <result column="aac316"  property="aac316" />
+    <result column="aac315"  property="aac315" />
+    <result column="aac308"  property="aac308" />
+    <result column="aac084"  property="aac084" />
+    <result column="aac307"  property="aac307" />
+    <result column="aac306"  property="aac306" />
+    <result column="aac305"  property="aac305" />
+    <result column="aac304"  property="aac304" />
+    <result column="aac303"  property="aac303" />
+    <result column="aac302"  property="aac302" />
+    <result column="aac301"  property="aac301" />
+    <result column="aar040"  property="aar040" />
+    <result column="aac312"  property="aac312" />
+    <result column="aac313"  property="aac313" />
+
+
+  </resultMap>
+
+  <select id="findPoduce" parameterType="java.lang.Long" resultMap="ResultMap">
+    select aar040,aac301,aac302,aac303,aac304,aac305,aac306,aac307,aac084,aac308,aac315,aac316,aac317,aac318,aac319,aac320,aac322,aac311,aac312 from (
+      select * from ac30 where aac001=#{num} order by aar040 desc ) where rownum=1
+  </select>
+  <select id="findSafeWater" parameterType="java.lang.Long" resultType="com.sysh.dto.SafeWaterAndSafeHOuseDto">
+   select aac311,aac312,aac318 from ac30 where aac001=#{num} and aar040=(select max(aar040)from ac07)
+  </select>
+  <select id="findHouseDanger" parameterType="java.lang.String" resultType="java.lang.Long">
+   select aac318 from ac30 where aac001=#{povertyNumber} and aar040=(select max(aar040) from ac30)
+  </select>
+  <select id="findReturningFarmland" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+   select aac304 from ac30 where aac001=#{povertyNumber} and aar040=(select max(aar040) from ac30)
+  </select>
+
+
+
+
+
+
+
+
+</mapper>

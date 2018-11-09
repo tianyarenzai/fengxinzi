@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.Sh01DDMapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.FamilyAb10Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>-->
+
+  <insert id="insertSh01" parameterType="com.sysh.entity.update.PovertyBasicInfoModel"  keyProperty="id" useGeneratedKeys="true"  >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      select data_review_id.nextval id from dual
+    </selectKey>
+     insert into data_review(aac001,aak110,id,DATA_REVIEW_TIME,first_secretary,town_poverty_office,county_poverty_office,table_name,modify_type
+      <if test="idNumber!=null">
+        ,id_number
+      </if>
+    ) values(#{aac001},#{aak110},#{id},#{time},0,0,0,#{tableName},#{modifyType}
+    <if test="idNumber!=null">
+      ,#{idNumber}
+    </if>
+    )
+  </insert>
+  <insert id="insertEight" parameterType="com.sysh.entity.update.PovertyBasicInfoModel"  keyProperty="id" useGeneratedKeys="true"  >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      SELECT eight_review_id.NEXTVAL id from dual
+    </selectKey>
+     insert into tbl_eight_review(eight_id,aak110,id,DATA_REVIEW_TIME,first_secretary,town_poverty_office,county_poverty_office,table_name,modify_type) values(#{aac001},#{aak110},#{id},#{time},0,0,0,#{tableName},#{modifyType})
+  </insert>
+  <insert id="insertVillage" parameterType="com.sysh.entity.update.PovertyBasicInfoModel"  keyProperty="id" useGeneratedKeys="true"  >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      SELECT VILL_REVIEW_ID.NEXTVAL id from dual
+    </selectKey>
+     insert into tbl_vill_review(vill_code,audit_code,id,DATA_REVIEW_TIME,town_poverty_office,county_poverty_office,table_name,modify_type) values(#{aac001},#{aak110},#{id},#{time},0,0,#{tableName},#{modifyType})
+  </insert>
+
+  <select id="selectInsertPrimary" resultType="java.lang.Long">
+    select max(id) from data_review
+  </select>
+
+  
+
+
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--TODO 需要注入controller的依赖-->
+    <context:component-scan base-package="com.sysh.web,com.sysh.service,com.sysh.web,com.sysh.util"/>
+    <mvc:annotation-driven/>
+    <aop:config proxy-target-class="true"></aop:config>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.sysh.web.interceptor.AuthenticationInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.sysh.web.interceptor.SqlInjectInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!--跨域-->
+    <mvc:cors>
+        <mvc:mapping path="/**" allowed-origins="*"/>
+    </mvc:cors>
+    <!--  文件上传表单的视图解析器  -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <!--&lt;!&ndash;后台管理系统定时器&ndash;&gt;
+    <bean id="screenSchedule" class="com.sysh.web.controller.DataScreening.TimeMethod"></bean>
+    <task:scheduled-tasks>
+        &lt;!&ndash;&lt;!&ndash;每天的0点与12点调用任务&ndash;&gt;&ndash;&gt;
+        <task:scheduled ref="screenSchedule" method="cron" cron="0 0 0,12 * * ?"/>
+    </task:scheduled-tasks>
+    &lt;!&ndash;电子作战大屏系统定时器&ndash;&gt;
+    <bean id="electWarfareMap" class="com.sysh.web.controller.ElectTimeMethod"></bean>
+    <task:scheduled-tasks>
+        &lt;!&ndash;每天的凌趁两点调用任务&ndash;&gt;
+        <task:scheduled ref="electWarfareMap" method="cron" cron="0 00 02 * * ?"/>
+    </task:scheduled-tasks>
+    &lt;!&ndash;****************************shiro注解配置***************************&ndash;&gt;
+    <import resource="shiro_context.xml"/>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor">
+    </bean>-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>-->
+
+    <!--********************************END*****************************-->
+    <!--全局异常处理器-->
+    <bean id="globalExceptionResolver" class="com.sysh.exception.GlobalExceptionResolver"></bean>
+</beans>

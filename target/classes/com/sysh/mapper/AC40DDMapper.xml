@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC40DDMapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.FamilyAb10Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>-->
+
+  <select id="isRelocationIntention" parameterType="java.lang.String" resultType="java.lang.Long">
+      select acr077 from ac40 where aac001=#{povertyNumber}
+  </select>
+
+
+
+  
+
+
+
+</mapper>

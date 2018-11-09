@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="client-sdk.api-1.0.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/client-sdk.api-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/client-sdk.common-1.0.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/client-sdk.core-1.0.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/client-sdk.example-1.0.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/client-sdk.spring-1.0.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/lippi-oapi-encrpt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/taobao-sdk-java-auto_1479188381469-20170724.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

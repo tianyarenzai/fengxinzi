@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.VillageDDMapper">
+
+    <select id="findVillageDD" parameterType="java.util.Map" resultType="com.sysh.entity.VillageNewModel">
+        SELECT
+	ad01.aar011,
+	ad01.aaf031,
+	ad01.aar012,
+	ad01.aad004,
+	ad01.aad035,
+	ad10.aad038,
+	ad10.aad037,
+	ad01.aad036,
+	ad10.aad019,
+	ad10.aad027,
+	ad10.aad021,
+	ad10.aad022,
+	ad10.aad023,
+	ad10.aad024,
+	ad10.aad025,
+	ad10.aad005,
+	ad32.aad006,
+	ad32.aad008,
+	ad32.aad009,
+	ad10.aad010,
+	ad32.aad012,
+	ad32.aad013,
+	ad32.aad014,
+	ad32.aad015,
+	ad32.aad016,
+	ad10.aad017,
+	ad32.aad018,
+	ad10.aad301,
+	ad10.aad302,
+	ad10.aad311,
+	ad10.aad313,
+	ad10.aad328,
+	ad10.aad323,
+	ad32.aad331,
+	ad32.aad332,
+	ad10.aad358,
+	ad32.aad361,
+	ad10.aad371,
+	ad10.aad381,
+	ad10.aad383,
+	ad10.aad382,
+	ad10.aad384,
+	ad10.aad391,
+	ad10.aad392,
+	ad10.aad393,
+	ad10.aad394,
+	ad10.aad401,
+	ad10.aad411,
+	ad10.aad413,
+	ad10.aad412,
+	ad10.aad414
+    FROM
+	AD01 left join AD10 ON ad01.AAD001 = ad10.AAD001 left join AD32 ON ad10.AAD001 = ad32.AAD001
+	AND ad10.AAR040 = ad32.AAR040
+    WHERE
+	ad10.AAR040 = #{year}
+	AND ad01.AAD001 = #{aad001}
+    </select>
+
+    <select id="findAAd001DD" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT AAD001 FROM AD09 WHERE AAK110 =#{aak110} AND AAR666=1
+    </select>
+
+    <select id="isFirstOrBaocun" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(1) FROM(
+      SELECT * FROM AK11 WHERE AAK032=1 or AAK777=1)t WHERE t.AAK110=#{aak110}
+    </select>
+    <select id="findName" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT a1.aar009 c,a2.aar009 b,a3.AAR009 a FROM AA11 a1 left join aa11 a2 on a1.aaa113=a2.AAR001 left join aa11 a3 on a2.aaa113=a3.AAR001 WHERE a1.AAR001=#{aad001}
+    </select>
+
+</mapper>

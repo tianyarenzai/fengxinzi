@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AB10AB01Mapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.AB10_AB01Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"  property="aab003" />
+    <result column="aab018"  property="aab018" />
+    <result column="aab004"  property="aab004" />
+    <result column="aab005" jdbcType="DOUBLE"  property="aab005" javaType="java.lang.String"  />
+    <result column="aab007"  property="aab007" />
+    <result column="aab031"  property="aab031" />
+    <result column="aab008"  property="aab008" />
+    <result column="aab009"  property="aab009"   />
+    <result column="aab010"  property="aab010" />
+    <result column="aab017"  property="aab017" />
+    <result column="aab019"  property="aab019" />
+    <result column="aak033"  property="aak033" />
+    <result column="aab030"  property="aab030" />
+    <result column="aab013"  property="aab013" />
+    <result column="aab014"  property="aab014" />
+    <result column="aab021"  property="aab021" />
+    <result column="aab022"  property="aab022" />
+    <result column="aab031"  property="aab031" />
+    <result column="aab006"  property="aab006" />
+
+  </resultMap>
+
+  <select id="findFamilyDetailInfo" parameterType="java.lang.Long" resultMap="ResultMap">
+    select ab10.aab002 aab002,ab10.aab003 aab003,ab10.aab018 aab018,ab10.aab004 aab004,
+       ab10.aab005 aab005,ab10.aab007 aab007,ab10.aab031 aab031,ab01.aab008 aab008,ab01.aab009 aab009,ab01.aab010 aab010,
+       ab01.aab017 aab017,ab01.aab019 aab019,ab01.aak033 aak033,ab01.aab030 aab030,ab01.aab013 aab013,ab01.aab014 aab014,
+       ab01.aab021 aab021,ab01.aab022 aab022,ab01.aab031 aab031,ab01.aab006 aab006
+        from ab10 left join ab01 on ab10.aab001=ab01.aab001
+        where ab01.aab001=#{num} and ab01.aar040=(select max(aar040)from ab01) and ab10.aar100=1 and ab01.aab015=1
+  </select>
+
+    <select id="findFamilyStudent" parameterType="java.lang.Long" resultType="com.sysh.dto.DropOfSchoolDto">
+        select ab01.aab009 studentStation,ab10.aab004 IDNumber from ab01 left join ab10 on ab01.aab001=ab10.aab001
+       where ab01.aac001=#{num} and ab01.aar040=(select max(aar040) from ab01  )
+        and ab10.aab015=01
+    </select>
+    <select id="findIsStudent" parameterType="java.lang.String" resultType="java.lang.Long">
+        select count(*) from ab10 left join ab01 on ab10.aab001=ab01.aab001
+        where substr(aab004,7,8) &gt;((select to_char(sysdate,'yyyyMMdd') from dual)-160000) and
+        substr(aab004,7,8) &lt;((select to_char(sysdate,'yyyyMMdd') from dual)-60000)
+        and ab01.aar040=(select max(aar040) from ab01 ) and ab01.aab009 is not null and ab01.aab015=1
+        and ab01.aab009 in('02','03','04','05','06') and ab10.aac001=#{povertyNumber}
+
+    </select>
+    <select id="findStudentIdNumber" parameterType="java.lang.String" resultType="java.lang.String">
+        select ab10.aab004 from ab10 left join ab01 on ab10.aab001=ab01.aab001
+        where substr(aab004,7,8) &gt;((select to_char(sysdate,'yyyyMMdd') from dual)-160000) and
+        substr(aab004,7,8) &lt;((select to_char(sysdate,'yyyyMMdd') from dual)-60000)
+        and ab01.aar040=(select max(aar040) from ab01 ) and ab01.aab009 is not null and ab01.aab015=1
+        and ab01.aab009 in('02','03','04','05','06') and ab10.aac001=#{povertyNumber}
+
+    </select>
+
+
+
+
+
+</mapper>

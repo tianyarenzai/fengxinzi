@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC01AK11Mapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.VillageDto">
+
+    <result column="AAR009"  property="aar009" />
+    <result column="AAA113"   property="aaa113" />
+
+  </resultMap>-->
+
+  <select id="selectHelpAndPoverty" parameterType="java.lang.Long" resultType="com.sysh.dto.HelpUserAndPovertyDto">
+   select ac08.aac080 aac080,ac08.aac001 aac001,ac08.aak110 aak110,ac08.aar020 aar020,ac08.aar021 aar021,
+      ac08.aar100 aar100, ac01.aac029 aac029,ak11.aab002 aab002,ak11.aap110,ak11.aak039,ak11.aak037,
+      ak11.aap001,ak11.aap004,ak11.aab004,ak11.aak033,ak11.aak036,ak11.aar012
+      from ac08 left join ac01 on ac01.aac001=ac08.aac001 left join ak11 on ac08.aak110=ak11.aak110
+      where ac08.aar100=1 and  ac01.aac001=#{num} and ac01.aar040=(select MAx(aar040) from ac01)
+  </select>
+  
+
+
+
+</mapper>

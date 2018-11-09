@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<settings>
+	<!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+	<!--解决，查询返回结果含null没有对应字段值问题-->
+	<setting name="callSettersOnNulls" value="true"/>
+</settings>
+<!-- 配置分页插件 -->
+<!--<plugins>
+	<plugin interceptor="com.github.pagehelper.PageInterceptor">
+	&lt;!&ndash; 属性配置：
+	helperDialect：分页插件会自动检测当前的数据库链接，自动选择合适的分页方式。可以配置helperDialect属性来指定分页插件使用哪种方言。配置时，可以使用下面的缩写值
+	oracle,mysql,mariadb,sqlite,hsqldb,postgresql,db2,sqlserver,informix,h2,sqlserver2012,derby
+	 &ndash;&gt;
+		<property name="helperDialect" value="oracle"/>
+		&lt;!&ndash;
+		reasonable:分页合理化参数pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询
+		&ndash;&gt;
+		<property name="reasonable" value="true"/>
+	</plugin>
+</plugins>-->
+
+
+
+
+</configuration>

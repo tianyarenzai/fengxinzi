@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AB01DDMapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.FamilyAb10Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>-->
+
+  <select id="findFamilyRelation" parameterType="java.lang.Long" resultType="java.lang.String">
+    select aab006 from (
+      select * from ab01 where aab001=#{num} order by aar040 desc)where rownum=1
+  </select>
+
+  <select id="IsJoin" parameterType="java.lang.Long" resultType="java.lang.String">
+    select aab013 from ab01 where aac001=#{num}  and aar040=(select max(aar040)from ab01)
+  </select>
+  <select id="findIsNotJoin" parameterType="java.lang.String" resultType="java.lang.Long">
+     select count(1) from (
+          select * from ab01 where aab013=0 or aab022=0 )t
+          where t.aac001=#{povertyNumber} and t.aar040=(select max(aar040) from ab01) and t.aab015=1
+  </select>
+
+
+
+  
+
+
+
+</mapper>

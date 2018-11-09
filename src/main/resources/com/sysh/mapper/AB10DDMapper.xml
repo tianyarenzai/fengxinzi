@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AB10DDMapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.FamilyAb10Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>
+
+  <select id="findFamily" parameterType="java.lang.Long" resultMap="ResultMap">
+    select aab002,aab003,aab005,aab001 from ab10 where aac001=#{num} and aab015=1
+  </select>
+  <select id="findFamilyIdNumber" parameterType="java.lang.String" resultType="java.lang.String">
+    select aab004 from ab10 where aac001=#{povertyNumber} and aab015=1 and aar100=1
+  </select>
+
+  <select id="findAab001" parameterType="java.lang.String" resultType="java.lang.String">
+    select aab001 from ab10 where aab004=#{idNumber} and aab015=1 and aar100=1
+  </select>
+
+
+  
+
+
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.HelpDDMapper">
+
+    <insert id="insertHelpReview" parameterType="com.sysh.dto.InsertHelpReview" useGeneratedKeys="true" keyProperty="id">
+        <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE">
+            select helpReview_id.Nextval id from dual
+        </selectKey>
+        INSERT into TBL_HELP_REVIEW (id,HELPNUMBER,UPDATETIME,FIRST_ADUIT,TOWN_ADUIT,DISTRICT_ADUIT,POVERTYNUMBER) VALUES(#{id},#{helpNumber},#{updateTime},0,0,0,#{povertyNumber})
+
+
+    </insert>
+
+    <insert id="insertHelpInfo" parameterType="com.sysh.dto.UpdateHelpNumberDto"  useGeneratedKeys="true" keyProperty="id">
+        <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE">
+            select helpInfo_id.Nextval id from dual
+        </selectKey>
+        INSERT INTO TBL_HELP_INFO(ID,UPDATE_BEFORE,UPDATE_AFTER,UPDATE_FIELD,REALNAME,HELP_REVIEW_ID) VALUES(#{id},#{updateBefore},#{updateAfter},#{updateField},#{realName},#{primary})
+    </insert>
+
+
+  
+
+
+
+</mapper>

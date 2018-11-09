@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.VillageStatisticsMapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.VillageStatisticsDto">
+
+    <result column=""  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>-->
+
+  <select id="findVillageStatisticsByVillageNum" parameterType="java.lang.Long" resultType="com.sysh.dto.VillageStatisticsDto">
+    select aad001, IS_VILL_ROAD IsVillRoad,MILEAGE Mileage,IS_OIL_TO_SAND IsOilToSand,
+  OIL_TO_SAND_NUM OilToSandMileage,IS_FOCUS_WATER  IsFocusWater,IS_TAP_WATER IsTapWater,
+  CONSTR_NUM ContrustionContentNumber,NATU_PRO_POW IsNaturalElectric,POV_PRO_POW IsPovertyElectric,
+  CONS_CONT_E  ContrustionContentElectric
+  from admin_village_statistics where aad001=#{num}
+  </select>
+
+
+
+  
+
+
+
+</mapper>

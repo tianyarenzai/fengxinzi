@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.PositionMapper">
+
+  <select id="findPosition" parameterType="java.util.Map" resultType="java.lang.String">
+    select helptime from position where position.helpnumber=#{helpNumber} and position.helptime like CONCAT(CONCAT('%', #{data}), '%')
+  </select>
+
+  <insert id="insertPosition" parameterType="com.sysh.entity.helpSignIn.SignInModel" >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      SELECT Position_id.NEXTVAL id from dual
+    </selectKey>
+    insert into position values(#{id},#{helpTime},#{helpPosition},#{longGitUde},#{latitude},#{helpNumber})
+  </insert>
+
+  <select id="IsPosition" parameterType="com.sysh.entity.helpSignIn.SignInModel" resultType="java.lang.Integer">
+    SELECT count(1) FROM POSITION WHERE HELPTIME=#{helpTime} AND HELPNUMBER=#{helpNumber}
+  </select>
+
+
+
+  
+
+
+
+</mapper>

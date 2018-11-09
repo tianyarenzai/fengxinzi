@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.HelpUserMapper">
+
+  <!--<resultMap id="BaseMap" type="com.sysh.entity.map.MapInfoModel">
+    <id column="id" property="mapID"/>
+    <result column="attr" property="mapAttr"/>
+    <result column="cnty" property="mapName"/>
+  </resultMap>-->
+
+
+  <select id="findHelpUserNumber" resultType="java.lang.Long" parameterType="java.lang.String">
+    select aak110 num  from (
+      select * from ak11 where aar012=#{userName} order by aak110 desc)
+      where ROWNUM=1
+  </select>
+
+
+
+
+  <select id="findHelpLogByHelpNum" resultType="com.sysh.entity.helplog.HelpLogModel" parameterType="java.lang.Long">
+      select id id,helplog log ,helptime helptime,helpNumber helpNumber,numberpraise numberPraise,visitingmode visitingMode from helplog where helpnumber=#{helpNumber} order by id desc
+  </select>
+  <select id="findHelpLogAll" resultType="com.sysh.entity.helplog.HelpLogModel" >
+      select id id,helplog log ,helptime helptime,helpNumber helpNumber,numberpraise numberPraise,visitingmode visitingMode from helplog order by id desc
+  </select>
+
+  <select id="findImagePath" resultType="java.lang.String" parameterType="java.lang.Long">
+    select imagepath from helpimage where logid=#{helpLogId}
+  </select>
+  <select id="findHelpNumber" resultType="java.lang.String" parameterType="java.lang.String">
+    select aak110 from (
+      select * from ak11 where aar012=#{mobile}  order by aar024 desc )t where rownum=1
+  </select>
+
+  <insert id="insertHelpLog" parameterType="com.sysh.entity.helplog.HelpLogModel" useGeneratedKeys="true" keyProperty="id">
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      select Helplog_id.Nextval id from dual
+    </selectKey>
+    insert into helplog values(#{id},#{log},#{helptime},#{helpNumber},#{numberPraise},#{visitingMode})
+
+  </insert>
+
+ <!-- <select id="findVillageName" parameterType="java.lang.String" resultType="java.util.Map" >
+    select aar009,aaa113 from aa11 where   aar001=(select aad001 from ad09 where aar100=1 and aar020 is not null and aar021 is not null
+    and aar021&gt;(select to_char(sysdate,'yyyymmdd') from dual )
+    and aar020&lt;(select to_char(sysdate,'yyyymmdd') from dual ) and aak110=(select t.aak110  from (
+    select aak110 from ak11 where  aak032=1 or aak031=1 or aak039=1)t where t.aak110=#{povertyNumber}))
+  </select>-->
+  <select id="findVillageName" parameterType="java.lang.String" resultType="java.util.Map" >
+    SELECT AAR009,AAA113 FROM AA11 WHERE AAR001 =(SELECT AAD001 FROM AD09 WHERE AAK110=(SELECT AAK110 FROM (
+SELECT * FROM AK11 WHERE AAK032=1 or AAK031=1 or AAK039=1 or AAK666=1 or aak777=1) WHERE AAK110=#{helpNumber}) AND AAR666=1)
+  </select>
+
+  <update id="isnertPraise" parameterType="java.util.Map" >
+    update helplog set numberpraise=#{number} where id=#{id}
+  </update>
+  <select id="selectByid" parameterType="java.lang.String" resultType="java.lang.Integer"  >
+      select numberpraise from helplog where id=#{id}
+  </select>
+
+  <select id="isResidency" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(1) from (
+          select * from ak11 where aak032=1  or aak039=1 or aak031=1 or aak777=1 or aak666=1 )t where t.aak110=#{helpNumber}
+
+  </select>
+
+  <select id="findDIscussDDList" parameterType="java.lang.Long" resultType="com.sysh.entity.helplog.DiscussDD">
+    select id id ,helpNumber helpNumber,discuss_value discussValue,log_id logId from tbl_discuss_value where log_id=#{logid}
+  </select>
+
+  <insert id="insertDiscuss" parameterType="com.sysh.entity.helplog.DiscussDD">
+    <selectKey resultType="String" keyProperty="id" order="BEFORE">
+      select Discuss_id.Nextval id from dual
+    </selectKey>
+    insert into tbl_discuss_value values(#{id},#{helpNumber},#{discussValue},#{logId})
+  </insert>
+
+  <insert id="insertHelpImage" parameterType="com.sysh.entity.helplog.HelpImageModel">
+    <selectKey resultType="String" keyProperty="id" order="BEFORE">
+      SELECT image_id.NEXTVAL id from dual
+    </selectKey>
+    insert into helpimage values(#{id},#{imagePath},#{logId},#{helpNumber})
+  </insert>
+
+  <select id="findHelpName" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT AAB002 FROM AK11 WHERE AAK110=#{s}
+  </select>
+  <select id="isFirstAduit" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT count(1) FROM AK11 WHERE AAK110 in(SELECT AAK110 FROM AD09 WHERE AAD001=(SELECT AAD001 FROM AD09 WHERE AAK110=#{helpNumber} AND AAR666=1) AND AAR666=1) AND AAK032=1
+  </select>
+</mapper>

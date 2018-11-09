@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AF02DDMapper">
+  <resultMap id="ResultMap" type="com.sysh.dto.MoveDto">
+
+    <result column="acr077"  property="IsMove" />
+    <result column="acr075"   property="MoveMethod" />
+
+  </resultMap>
+  <select id="findMove" parameterType="java.lang.Long" resultMap="ResultMap">
+    select acr077,acr075 from af02 where aac001=#{num}
+  </select>
+  
+
+
+
+</mapper>

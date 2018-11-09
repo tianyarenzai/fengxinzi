@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.AC08DDMapper">
+
+  <!--<resultMap id="BaseMap" type="com.sysh.entity.map.MapInfoModel">
+    <id column="id" property="mapID"/>
+    <result column="attr" property="mapAttr"/>
+    <result column="cnty" property="mapName"/>
+  </resultMap>-->
+
+
+  <select id="findPovertyNumber" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select aac001 from ac08 where aak110=#{num} and aar666=1
+  </select>
+  
+
+
+
+</mapper>

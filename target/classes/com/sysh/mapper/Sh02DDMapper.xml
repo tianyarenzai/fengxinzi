@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysh.mapper.Sh02DDMapper">
+  <!--<resultMap id="ResultMap" type="com.sysh.dto.FamilyAb10Dto">
+
+    <result column="aab002"  property="aab002" />
+    <result column="aab003"   property="aab003" />
+    <result column="aab005"   property="aab005" />
+    <result column="aab001"   property="aab001" />
+  </resultMap>-->
+
+  <insert id="insertSh02" parameterType="com.sysh.entity.update.Sh02Model"   >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      select info_review_id.nextval id from dual
+    </selectKey>
+    insert into info_review(id,info_name,update_before,update_after,data_review_id) values(#{id},#{sh005},#{sh006},#{sh007},#{sh01_id })
+  </insert>
+  <insert id="insertEight" parameterType="com.sysh.entity.update.Sh02Model"   >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      SELECT eight_info_id.NEXTVAL id from dual
+    </selectKey>
+    insert into tbl_eight_info values(#{id},#{sh005},#{sh006},#{sh007},#{sh01_id },#{realName})
+  </insert>
+  <insert id="insertVillage" parameterType="com.sysh.entity.update.Sh02Model"   >
+    <selectKey resultType="long" keyProperty="id" order="BEFORE">
+      SELECT VILL_INFO_ID.NEXTVAL id from dual
+    </selectKey>
+    insert into tbl_vill_info values(#{id},#{sh005},#{sh006},#{sh007},#{sh01_id },#{realName})
+  </insert>
+
+  <select id="findFieldName" parameterType="java.util.Map" resultType="java.lang.String">
+    SELECT DD_VALUE FROM TBL_MEASURE_FIELD  WHERE TABLE_NAME =#{tableName} and DD_NAME=#{field}
+  </select>
+
+
+
+
+
+  
+
+
+
+</mapper>
