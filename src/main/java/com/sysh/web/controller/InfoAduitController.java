@@ -39,7 +39,7 @@ public class InfoAduitController {
     @RequestMapping(value = "/help")
     public ResultData HelpAduit(Long helpNumber)
     {
-        if(helpNumber==null||"".equals(helpNumber))
+        if(helpNumber==null)
         {
             return ResultData.returnResultData(ResultData.DATA_FALSE,"查询条件不足");
         }

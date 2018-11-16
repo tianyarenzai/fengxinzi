@@ -263,7 +263,7 @@ public class VillageBasicDto implements Serializable {
         return aad301;
     }
 
-    public void setAad301(String aad031) {
+    public void setAad301(String aad301) {
         this.aad301 = aad301;
     }
 

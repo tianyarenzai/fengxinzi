@@ -134,7 +134,7 @@ public class PictureUploadController {
         //String path = "D:\\images\\fuping1";
 
         MultipartHttpServletRequest reqParam=(MultipartHttpServletRequest)request;
-        log=reqParam.getParameter("log");
+        //log=reqParam.getParameter("log");
         helpNumber=reqParam.getParameter("helpNumber");
         visitingMode=reqParam.getParameter("visitingMode");
 
@@ -272,7 +272,7 @@ public class PictureUploadController {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                 //String photoName=dateFormat.format(date);
                 String photoName=String.valueOf(System.currentTimeMillis());
-                int round=(int) Math.random()*100;
+                int round=(int) (Math.random()+1)*100;
                 String txt=file1.getOriginalFilename().split("\\.")[1];
                 String imgName=photoName+round+"."+txt;
                 log.info("+++++++++++图片路径+++++++++++"+imgName);
