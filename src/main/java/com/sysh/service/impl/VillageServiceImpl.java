@@ -369,8 +369,8 @@ public class VillageServiceImpl implements VillageDDService {
         }
         //先根据帮扶干部编号去查询对应的市县村名称，在进行查询
         Map map =helpUserMapper.findVillageName(mapUpdate.get("helpNumber"));
-        log.info("map里面是个什么东西"+map.toString());
-        if(map.size()>0&&map!=null) {
+        //log.info("map里面是个什么东西"+map.toString());
+        if(map!=null) {
             Map<String, Object> townName = aa11DDMapper.findTownName((BigDecimal) map.get("AAA113"));
             Map<String, Object> distinctName = aa11DDMapper.findTownName((BigDecimal) townName.get("AAA113"));
 

@@ -28,7 +28,7 @@ public class SubmitServiceImpl implements SubmitService {
             return ResultData.returnResultData(ResultData.DATA_MISS,"参数错误");
         }
         List<Map> list=submitMapper.submitData(map);
-        if(list==null && list.isEmpty())
+        if(list==null )
         {
             return ResultData.returnResultData(ResultData.RESULT_SUCCESS,"暂无数据");
         }

@@ -246,7 +246,7 @@ public class HelpMeasureDDServiceImpl implements HelpMeasureDDService {
                 for(int i=0;i<studentList.size();i++)
                 {
                     EducationDD educationDD=educationDDMapper.findEducationByid(studentList.get(i));
-                    log.info("教育扶贫的人"+educationDD.toString());
+                    //log.info("教育扶贫的人"+educationDD.toString());
                     if(educationDD!=null)
                     {
                         sumEduction.add(educationDD);
